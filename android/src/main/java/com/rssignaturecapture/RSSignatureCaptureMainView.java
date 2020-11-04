@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import java.lang.Boolean;
+import java.util.UUID;
 
 public class RSSignatureCaptureMainView extends LinearLayout implements OnClickListener,RSSignatureCaptureView.SignatureCallback {
   LinearLayout buttonsLayout;
@@ -150,7 +151,10 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
     }
 
     // set the file name of your choice
-    String fname = "signature.png";
+    String uuid = UUID.randomUUID().toString().replace("-", "");
+    String fname = uuid + "_signature.png";
+    Log.d("uuid", uuid);
+    Log.d("fname", fname);
 
     // in our case, we delete the previous file, you can remove this
     File file = new File(myDir, fname);
@@ -169,18 +173,17 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
         out.close();
       }
 
+      // ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+      // Bitmap resizedBitmap = getResizedBitmap(this.signatureView.getSignature());
+      // resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
 
-      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      Bitmap resizedBitmap = getResizedBitmap(this.signatureView.getSignature());
-      resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
 
-
-      byte[] byteArray = byteArrayOutputStream.toByteArray();
-      String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+      // byte[] byteArray = byteArrayOutputStream.toByteArray();
+      // String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
       WritableMap event = Arguments.createMap();
       event.putString("pathName", file.getAbsolutePath());
-      event.putString("encoded", encoded);
+      event.putString("encoded", "");
       ReactContext reactContext = (ReactContext) getContext();
       reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "topChange", event);
     } catch (Exception e) {
