@@ -195,7 +195,11 @@
 
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsDirectory = [paths firstObject];
-	NSString *tempPath = [documentsDirectory stringByAppendingFormat:@"/signature.png"];
+    NSUUID *uuid = [NSUUID UUID];
+    NSString *uuisString = [uuid UUIDString];
+    NSString *tempPath = [NSString stringWithFormat:@"%@/%@_signature.png", documentsDirectory, uuisString ];
+    NSLog(@"FIRST VERSION IS %@", [documentsDirectory stringByAppendingFormat:@"/signature.png"]);
+    NSLog(@"LAST VERSION IS %@", tempPath);
 
 	//remove if file already exists
 	if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
