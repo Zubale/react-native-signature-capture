@@ -195,11 +195,7 @@
 
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsDirectory = [paths firstObject];
-    NSUUID *uuid = [NSUUID UUID];
-    NSString *uuisString = [uuid UUIDString];
-    NSString *tempPath = [NSString stringWithFormat:@"%@/%@_signature.png", documentsDirectory, uuisString ];
-    NSLog(@"FIRST VERSION IS %@", [documentsDirectory stringByAppendingFormat:@"/signature.png"]);
-    NSLog(@"LAST VERSION IS %@", tempPath);
+	NSString *tempPath = [documentsDirectory stringByAppendingFormat:@"/signature.jpg"];
 
 	//remove if file already exists
 	if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
@@ -210,7 +206,7 @@
 	}
 
 	// Convert UIImage object into NSData (a wrapper for a stream of bytes) formatted according to PNG spec
-	NSData *imageData = UIImagePNGRepresentation(signImage);
+	NSData *imageData = UIImageJPEGRepresentation(signImage, 0.7);
 	BOOL isSuccess = [imageData writeToFile:tempPath atomically:YES];
 	if (isSuccess) {
 		NSFileManager *man = [NSFileManager defaultManager];
