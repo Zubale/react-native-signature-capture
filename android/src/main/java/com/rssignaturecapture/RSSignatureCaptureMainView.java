@@ -152,7 +152,7 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
 
     // set the file name of your choice
     String uuid = UUID.randomUUID().toString().replace("-", "");
-    String fname = uuid + "_signature.png";
+    String fname = uuid + "_signature.jpg";
     Log.d("uuid", uuid);
     Log.d("fname", fname);
 
@@ -168,7 +168,7 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
       // save the signature
       if (saveFileInExtStorage) {
         FileOutputStream out = new FileOutputStream(file);
-        this.signatureView.getSignature().compress(Bitmap.CompressFormat.PNG, 90, out);
+        this.signatureView.getSignature().compress(Bitmap.CompressFormat.JPEG, 70, out);
         out.flush();
         out.close();
       }
